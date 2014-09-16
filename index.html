@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="Content-Language" content="ru">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-Control" content="no-cache">
+		<meta http-equiv="Expires" content="-1">
+		<meta name="description" content="Официальный сайт Дельфина">
+		<meta name="keywords" content="дельфин, dolphin, скачать, тексты, дельфина, mp3, музыка, музыку, звезда, рок, альтернатива, альтернативный, юность, новый альбом дельфина">
+		<meta name="developer" content="Sergey Armodin. mak@arm1.ru">
+		
+		<title>ДЕЛЬФИН | DOLPHIN</title>
+
+		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+		
+		<!-- Favicon -->
+		<link rel="shortcut icon" href="/favicon.png">
+
+
+
+		<style>
+			.is_overlay{ display: block; width: 100%; height: 100%; }
+			
+			#preloader {
+				margin: auto; 
+				left: 0; top: 0; right: 0; bottom: 0; 
+				position: absolute;
+				width: 4em;				
+				height: 4em;
+				text-align: center;
+				vertical-align: middle;
+				transition: opacity .3s;
+				-webkit-transition: opacity .3s;
+				-moz-transition: opacity .3s;
+				-ms-transition: opacity .3s;
+				-o-transition: opacity .3s;
+				background-color: black;
+				border: 1px solid black;
+				border-radius: 10px;
+				padding: 5px;
+			}
+
+			#wait { 
+				-webkit-animation: spin 1.2s infinite linear; 
+				-moz-animation: spin 1.2s infinite linear; 
+				-ms-animation: spin 1.2s infinite linear; 
+				-o-animation: spin 1.2s infinite linear; 
+				animation: spin 1.2s infinite linear; 
+				font-size: 4em;
+				color: white;
+			}
+			
+
+			body {
+				background-color: black;
+			}
+
+			#trailer {
+				position: fixed;
+				top: 0; right: 0; bottom: 0; left: 0;
+				overflow: hidden;
+			}
+			#trailer > video {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+
+			/* 1. No object-fit support: */
+			@media (min-aspect-ratio: 16/9) {
+				#trailer > video { height: 300%; top: -100%; }
+			}
+			@media (max-aspect-ratio: 16/9) {
+				#trailer > video { width: 300%; left: -100%; }
+			}
+			/* 2. If supporting object-fit, overriding (1): */
+			@supports (object-fit: cover) {
+				#trailer > video {
+					top: 0; left: 0;
+					width: 100%; height: 100%;
+					object-fit: cover;
+				}
+			}
+
+			#enter {
+				position: fixed;
+				z-index: 100;
+				right: 3em;
+				bottom: 3em;
+				opacity: 0;
+				transition: opacity 9.3s;
+				-webkit-transition: opacity 9.3s;
+				-moz-transition: opacity 9.3s;
+				-ms-transition: opacity 9.3s;
+				-o-transition: opacity 9.3s;
+			}
+
+		</style>
+
+		<script src="detect.min.js"></script>
+
+		<script type="text/javascript">
+			var Preloader = function (element) {				
+				var video =  document.getElementById(element),
+					preloader = document.getElementById('preloader'),
+					enter = document.getElementById('enter');
+
+				var ua = detect.parse(navigator.userAgent);
+				if ( ua.os.family === 'Android' ) {
+					video.setAttribute( 'controls','controls' );
+				}
+				
+
+				var api = {};
+
+				api._removePreloader = function() {
+					preloader.style.opacity = 0;
+					enter.style.opacity = 1;
+				};
+
+				api.startCheckingLoading = function() {
+					video.addEventListener('click',function(){
+					  video.play();
+					},false);
+
+					video.addEventListener( 'play', api._removePreloader() );			
+				};
+
+				return api;			   			   
+			}
+			
+			window.addEventListener('load', function() {
+				var preloader = Preloader('video');
+				preloader.startCheckingLoading();
+
+
+				
+			});
+
+
+		</script>
+	</head>
+
+	<body>
+		<div id="enter">
+			<a href="/news"><img src="enter.png" width="200" height="83" alt="Войти на сайт"></a>
+		</div>
+		<div id="trailer" class="is_overlay">
+			<video id="video" width="100%" height="auto"  autoplay="autoplay" loop="loop" preload="auto" >
+				<source src="book.mp4">
+				<source src="book.webm" type="video/webm">
+			</video>
+		</div>
+
+		<div id="preloader">
+			<i id="wait" class="fa fa-spinner"></i>
+		</div>
+	</body>
+</html>
